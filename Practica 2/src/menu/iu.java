@@ -4,8 +4,10 @@
  */
 package menu;
 
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import menu.Simulacion;
 
 
 public class iu extends javax.swing.JFrame {
@@ -282,8 +284,11 @@ public void ingresoDatos(){
                 setTiempoPRO(getTimeProduccion());
                 setTiempoSAL(getTimeExit());
                 JOptionPane.showMessageDialog(null,"Datos ingresados correctamente");
+                dispose();
+                Simulacion s = new Simulacion();
+                s.setVisible(true);
 
-            }catch(Exception e){
+            }catch(HeadlessException e){
                 System.out.println("Error al ingresar datos");
                 JOptionPane.showMessageDialog(null,"Todos los datos deben ser enteros","Error con los valores",JOptionPane.ERROR_MESSAGE);
             }
