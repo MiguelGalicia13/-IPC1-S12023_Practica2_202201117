@@ -9,15 +9,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
-
-import menu.*;
 
 /**
  *
  * @author ricar
  */
-public class Simulacion extends javax.swing.JFrame implements KeyListener{
+public class Simulacion extends javax.swing.JFrame implements KeyListener {
+    Timer espera = new Timer(1000, null);
+    int seg = 0;
+    Color fondoRojo = new Color(255, 166, 166);
+    Color fondoAzul = new Color(116, 205, 252);
+    Color fondoVerde = new Color(164, 252, 116);
+    Color fondoMorado = new Color(232, 168, 255);
+    Color predeterminado = new Color(255, 241, 168);
+    Color proc = new Color(0, 0, 255);
     private int contador = 0;
     private Timer timer;
     Objetos[] objetos;
@@ -26,18 +35,13 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener{
 
     public Simulacion() {
         initComponents();
-        Color fondoRojo = new Color(255, 166, 166);
-        Color fondoAzul = new Color(116, 205, 252);
-        Color fondoVerde = new Color(164, 252, 116);
-        Color fondoMorado = new Color(232, 168, 255);
-        Color predeterminado = new Color(255, 241, 168);
-        Color proc = new Color(0, 0, 255);
+
 
         this.objetos = new Objetos[4];
-        this.objetos[0] = new Objetos(fondoMorado, 100, 50,25);
-        this.objetos[1] = new Objetos(fondoRojo, 100, 275,30);
-        this.objetos[2] = new Objetos(fondoVerde, 400, 50,10);
-        this.objetos[3] = new Objetos(fondoAzul, 400, 275,5);
+        this.objetos[3] = new Objetos(fondoMorado, 100, 50, 25);
+        this.objetos[2] = new Objetos(fondoRojo, 100, 275, 30);
+        this.objetos[1] = new Objetos(fondoVerde, 400, 50, 10);
+        this.objetos[0] = new Objetos(fondoAzul, 400, 275, 5);
 
         this.add(this.objetos[0]);
         this.add(this.objetos[1]);
@@ -45,30 +49,39 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener{
         this.add(this.objetos[3]);
 
         // Crear un temporizador que genere las bolitas cada segudo
-        Timer timer = new Timer(1000, e -> {
-            if (contadorBolitas < 29) {
-                this.bolitas[contadorBolitas] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 10000, 400, 275);
-                this.add(this.bolitas[contadorBolitas].getBolita());
-                Container container = getContentPane();
-                container.setComponentZOrder(this.bolitas[contadorBolitas].getBolita(),0);
-                contadorBolitas++;
+        Timer iniciar = new Timer(1000, q -> {
+            try {
+                for (int z = 0; z <= 28; z++) {
+                    if (z < 13) {
+                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, 400 + 10 * z, 275);
+                        this.add(this.bolitas[z].getBolita());
+                        Container container = getContentPane();
+                        container.setComponentZOrder(this.bolitas[z].getBolita(), 0);
+                    } else if (z < 26) {
+                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, 400 + 10 * (z - 13), 310);
+                        this.add(this.bolitas[z].getBolita());
+                        Container container = getContentPane();
+                        container.setComponentZOrder(this.bolitas[z].getBolita(), 0);
+                    } else if (z < 30) {
+                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, 400 + 10 * (z - 26), 345);
+                        this.add(this.bolitas[z].getBolita());
+                        Container container = getContentPane();
+                        container.setComponentZOrder(this.bolitas[z].getBolita(), 0);
+
+                    }
+
+                }
+                
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-
-
-
-
         });
-        timer.start();
-      
+        iniciar.start();
+
     }
-
-        //produccion a inventario
-
-
-
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -95,9 +108,11 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener{
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
+
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
+
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -108,18 +123,18 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener{
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(692, Short.MAX_VALUE)
-                .addComponent(inicio)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(692, Short.MAX_VALUE)
+                                .addComponent(inicio)
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(358, Short.MAX_VALUE)
-                .addComponent(inicio)
-                .addGap(114, 114, 114))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(358, Short.MAX_VALUE)
+                                .addComponent(inicio)
+                                .addGap(114, 114, 114))
         );
 
         pack();
@@ -131,29 +146,34 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener{
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_formWindowOpened
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formMousePressed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
+
+        empezar();
+        System.out.println(getSeg());
+        System.out.println(pInventariox());
+        System.out.println(pInventarioY());
        timer = new Timer(1000, new ActionListener() { // Crea un temporizador que se ejecutará cada 1000ms (1 segundo)
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent z) {
                 if (contador <= 28) { // Crea las figuras mientras el contador sea menor o igual a 28
-                    bolitas[contador].setPosicionX(objetos[0].getX());
-                    bolitas[contador].setPosicionY(objetos[0].getY());
+                    bolitas[contador].mover(pIniciox(),pInicioy(),predeterminado);
                     bolitas[contador].start();
+                    bolitas[contador].mover(pIniciox(),pInicioy(),predeterminado);
                     contador++;
-                } else {
-                    timer.stop(); // Detiene el temporizador cuando ya se crearon todas las figuras
+                    System.out.println(getSeg());
                 }
             }
         });
+
         timer.start();
 
 
@@ -168,7 +188,7 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener{
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -188,19 +208,19 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener{
         }
         //</editor-fold>
 
-        
-        
 
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Simulacion().setVisible(true);
-                
+
             }
         });
     }
@@ -230,11 +250,42 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener{
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
-   public int pIniciox(){
-       return inicio.getX();
-   }
-   public int pInicioy(){
-       return inicio.getY();
-   }
+    public int pIniciox() {
+        return inicio.getX();
+    }
 
+    public int pInicioy() {
+        return inicio.getY();
+    }
+    public int pInventariox() {
+        return this.objetos[1].getPosicionX();
+    }
+    public int pInventarioY() {
+        return this.objetos[1].getPosicionY();
+    }
+    public void produccionEspera(){
+        try{
+
+            for(int z=0; z<=28;z++){
+                this.bolitas[z].setColores(proc);
+                this.bolitas[z].setPosicionX(400 + 10 * z);
+                this.bolitas[z].setPosicionY(275);
+                this.bolitas[z].setPosFinalx(410+10*z);
+                this.bolitas[z].setPosFinaly(50);
+            }
+        }catch (Exception m){
+            m.printStackTrace();
+        }
+    }
+    public void empezar() {
+        Timer cronometro = new Timer(1000, e -> {
+            seg++;
+        });
+        cronometro.start();
+    }
+
+    public int getSeg() {
+        return seg;
+    }
+  
 }
