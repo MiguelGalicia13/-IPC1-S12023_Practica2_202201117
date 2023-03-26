@@ -15,41 +15,47 @@ import javax.swing.JPanel;
  * @author ricar
  */
 public class Animacion extends Thread{
-    private boolean ejecutarhilo;
-    JLabel Ficha;
-    int posIx;
-    int posIy;
-    int posFx;
-    int posFy;
-    int velocidadGenerar;
+    private boolean ejecutaHilo;
+    JLabel ficha;
+    int posInicialX;
+    int posFinalX;
+    int posInicialY;
+    int posFinalY;
+    int veocidad;
     int dimension;
-    int cantidad;
-    int contador;
-    JLabel v; 
-    
-    public Animacion(JLabel v) {
-        this.ejecutarhilo = true;
-        //this.Ficha = Ficha;
-        this.posIx = 10;
-        this.posIy = 10;
-        this.posFx =400;
-        this.posFy =200;
-        this.velocidadGenerar = 1000;
+
+    public Animacion(JLabel ficha, int posInicialX, int posFinalX, int posInicialY, int posFinalY) {
+        this.ficha = ficha;
+        this.posInicialX = posInicialX;
+        this.posFinalX = posFinalX;
+        this.posInicialY = posInicialY;
+        this.posFinalY = posFinalY;
+        this.ejecutaHilo = true;
         this.dimension = 100;
-        this.cantidad = 100;
-        this.contador = 0;
-        this.v=v;
+        this.veocidad = 25;
     }
-    
-     @Override
+    @Override
     public void run(){
-        while(ejecutarhilo){
+        while(ejecutaHilo){
             try {
-                Thread.sleep(velocidadGenerar);
+                Thread.sleep(veocidad);
+                Moverficha();
             } catch (InterruptedException ex) {
-                Logger.getLogger(Animacion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    private void Moverficha(){
+        if(posInicialX<posFinalX) {
+            ficha.setBounds(posInicialX, posInicialY, dimension, dimension);
+            posInicialX+=3;
+        }
+        if(posInicialX>=posFinalX){
+            if(posInicialY<posFinalY) {
+                ficha.setBounds(posInicialX, posInicialY, dimension, dimension);
+                posInicialY+=3;
+            }
+        }
+        if(posInicialX>=posFinalX && posInicialY>=posFinalY) this.ejecutaHilo = false;
     }
     
 }

@@ -11,15 +11,14 @@ import menu.Simulacion;
 
 
 public class iu extends javax.swing.JFrame {
-private static int TiempoINV;
-private static int TiempoPRO;
-private static int TiempoEMP;
-private static int TiempoSAL;
-private static int PrecioINV;
-private static int PrecioPRO;
-private static int PrecioEMP;
-private static int PrecioSAL;
-
+private static int  Pproduccion;
+private static int Pinventario;
+private static int Pexit;
+private static int Pempaquetado;
+private static int Tproduccion;
+private static int Tinventario;
+private static int Texit;
+private static int Tempaquetado;
     public iu() {
         initComponents();
     }
@@ -225,6 +224,14 @@ private static int PrecioSAL;
 
     private void StartButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StartButtonMouseClicked
         // TODO add your handling code here:
+        setPproduccion(getPriceProdcuccion());
+        setPinventario(getPriceInventario());
+        setPexit(getPriceExit());
+        setPempaquetado(getPriceEmpaquetado());
+        setTproduccion(getTimeProduccion());
+        setTinventario(getTimeInventario());
+        setTempaquetado(getTimeEmpaquetado());
+        setTexit(getTimeExit());
             ingresoDatos();
 
 
@@ -275,14 +282,7 @@ private static int PrecioSAL;
 public void ingresoDatos(){
         if(verificarCampos()){
             try{
-                setPrecioINV(getPriceInventario());
-                setPrecioEMP(getPriceEmpaquetado());
-                setPrecioPRO(getPriceProdcuccion());
-                setPrecioSAL(getPriceExit());
-                setTiempoINV(getTimeInventario());
-                setTiempoEMP(getTimeEmpaquetado());
-                setTiempoPRO(getTimeProduccion());
-                setTiempoSAL(getTimeExit());
+
                 JOptionPane.showMessageDialog(null,"Datos ingresados correctamente");
                 dispose();
                 Simulacion s = new Simulacion();
@@ -293,6 +293,7 @@ public void ingresoDatos(){
                 JOptionPane.showMessageDialog(null,"Todos los datos deben ser enteros","Error con los valores",JOptionPane.ERROR_MESSAGE);
             }
         }else JOptionPane.showMessageDialog(null,"Todos los campos deben ser llenados","Error con los valores",JOptionPane.ERROR_MESSAGE);
+
 
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -314,7 +315,8 @@ public void ingresoDatos(){
     private javax.swing.JLabel t;
     // End of variables declaration//GEN-END:variables
 
-    public int getPriceEmpaquetado() { 
+
+    public int getPriceEmpaquetado() {
         return Integer.parseInt(PriceEmpaquetado.getText());
     }
 
@@ -346,69 +348,68 @@ public void ingresoDatos(){
         return Integer.parseInt(TimeProduccion.getText());
     }
 
-    public static int getTiempoINV() {
-        return TiempoINV;
+    public int getPproduccion() {
+        return Pproduccion;
     }
 
-    public static void setTiempoINV(int TiempoINV) {
-        iu.TiempoINV = TiempoINV;
+    public void setPproduccion(int pproduccion) {
+        Pproduccion = pproduccion;
     }
 
-    public static int getTiempoPRO() {
-        return TiempoPRO;
+    public int getPinventario() {
+        return Pinventario;
     }
 
-    public static void setTiempoPRO(int TiempoPRO) {
-        iu.TiempoPRO = TiempoPRO;
+    public void setPinventario(int pinventario) {
+        Pinventario = pinventario;
     }
 
-    public static int getTiempoEMP() {
-        return TiempoEMP;
+    public int getPexit() {
+        return Pexit;
     }
 
-    public static void setTiempoEMP(int TiempoEMP) {
-        iu.TiempoEMP = TiempoEMP;
+    public void setPexit(int pexit) {
+        Pexit = pexit;
     }
 
-    public static int getTiempoSAL() {
-        return TiempoSAL;
+    public int getPempaquetado() {
+        return Pempaquetado;
     }
 
-    public static void setTiempoSAL(int TiempoSAL) {
-        iu.TiempoSAL = TiempoSAL;
+    public void setPempaquetado(int pempaquetado) {
+        Pempaquetado = pempaquetado;
     }
 
-    public static int getPrecioINV() {
-        return PrecioINV;
+    public int getTproduccion() {
+        return Tproduccion;
     }
 
-    public static void setPrecioINV(int PrecioINV) {
-        iu.PrecioINV = PrecioINV;
+    public void setTproduccion(int tproduccion) {
+        Tproduccion = tproduccion;
     }
 
-    public static int getPrecioPRO() {
-        return PrecioPRO;
+    public int getTinventario() {
+        return Tinventario;
     }
 
-    public static void setPrecioPRO(int PrecioPRO) {
-        iu.PrecioPRO = PrecioPRO;
+    public void setTinventario(int tinventario) {
+        Tinventario = tinventario;
     }
 
-    public static int getPrecioSAL() {
-        return PrecioSAL;
+    public int getTexit() {
+        return Texit;
     }
 
-    public static void setPrecioSAL(int PrecioSAL) {
-        iu.PrecioSAL = PrecioSAL;
+    public void setTexit(int texit) {
+        Texit = texit;
     }
 
-    public static int getPrecioEMP() {
-        return PrecioEMP;
+    public int getTempaquetado() {
+        return Tempaquetado;
     }
 
-    public static void setPrecioEMP(int PrecioEMP) {
-        iu.PrecioEMP = PrecioEMP;
+    public void setTempaquetado(int tempaquetado) {
+        Tempaquetado = tempaquetado;
     }
-
 }
 

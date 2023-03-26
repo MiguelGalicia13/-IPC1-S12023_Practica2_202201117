@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +22,7 @@ import javax.swing.*;
  */
 public class Simulacion extends javax.swing.JFrame implements KeyListener {
     Timer espera = new Timer(1000, null);
-    int seg = 0;
+    private static int seg;
     Color fondoRojo = new Color(255, 166, 166);
     Color fondoAzul = new Color(116, 205, 252);
     Color fondoVerde = new Color(164, 252, 116);
@@ -93,9 +95,15 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         inicio = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tiempo = new javax.swing.JLabel();
+        reporte = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventana");
@@ -108,11 +116,9 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
-
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
-
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -120,21 +126,54 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
 
         inicio.setText("Inicio");
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Tiempo Transcurrido");
+
+        tiempo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        reporte.setText("Generar Reporte");
+        reporte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reporteMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(692, Short.MAX_VALUE)
-                                .addComponent(inicio)
-                                .addContainerGap())
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(692, Short.MAX_VALUE)
+                        .addComponent(inicio))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(247, 247, 247)
+                        .addComponent(jLabel2)
+                        .addGap(0, 359, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(235, 235, 235)
+                .addComponent(tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(reporte)
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(358, Short.MAX_VALUE)
-                                .addComponent(inicio)
-                                .addGap(114, 114, 114))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(reporte, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 286, Short.MAX_VALUE)
+                .addComponent(inicio)
+                .addGap(114, 114, 114))
         );
 
         pack();
@@ -158,9 +197,7 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
         // TODO add your handling code here:
 
         empezar();
-        System.out.println(getSeg());
-        System.out.println(pInventariox());
-        System.out.println(pInventarioY());
+
        timer = new Timer(1000, new ActionListener() { // Crea un temporizador que se ejecutará cada 1000ms (1 segundo)
             @Override
             public void actionPerformed(ActionEvent z) {
@@ -170,6 +207,7 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
                     bolitas[contador].mover(pIniciox(),pInicioy(),predeterminado);
                     contador++;
                     System.out.println(getSeg());
+                    tiempo.setText("00:"+String.valueOf(getSeg()));
                 }
             }
         });
@@ -180,6 +218,17 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
 
 
     }//GEN-LAST:event_formWindowActivated
+
+    private void reporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reporteMouseClicked
+        // TODO add your handling code here:
+        iu HUD = new iu();
+        GenerarReporte g = new GenerarReporte();
+        g.CrearArchivo("Reporte");
+        System.out.println("Precio produccion  " +HUD.getPproduccion());
+        g.Escribir("Reporte");
+        
+        
+    }//GEN-LAST:event_reporteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -247,7 +296,11 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel inicio;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton reporte;
+    private javax.swing.JLabel tiempo;
     // End of variables declaration//GEN-END:variables
 
     public int pIniciox() {
@@ -278,14 +331,24 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
         }
     }
     public void empezar() {
-        Timer cronometro = new Timer(1000, e -> {
-            seg++;
+        Timer crono = new Timer(1000, e -> {
+            this.seg++;
+            if(seg<10){
+                tiempo.setText("00:0"+ String.valueOf(getSeg()));
+            }else if(seg<60){
+                tiempo.setText("00:" + String.valueOf(getSeg()));
+            }else if(seg<70){
+                tiempo.setText("01:0" + String.valueOf(getSeg()-60));
+            } else if (seg<120) {
+                tiempo.setText("01:" + String.valueOf(getSeg()-60));
+            }
+
         });
-        cronometro.start();
+        crono.start();
     }
 
     public int getSeg() {
-        return seg;
+        return this.seg;
     }
   
 }
