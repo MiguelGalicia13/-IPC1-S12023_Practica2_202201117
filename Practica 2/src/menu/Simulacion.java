@@ -23,6 +23,7 @@ import javax.swing.*;
 public class Simulacion extends javax.swing.JFrame implements KeyListener {
     Timer espera = new Timer(1000, null);
     private static int seg;
+    int c =0;
     Color fondoRojo = new Color(255, 166, 166);
     Color fondoAzul = new Color(116, 205, 252);
     Color fondoVerde = new Color(164, 252, 116);
@@ -32,13 +33,11 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
     private int contador = 0;
     private Timer timer;
     Objetos[] objetos;
-    MateriaPrima[] bolitas = new MateriaPrima[29];
+    MateriaPrima[] bolitas = new MateriaPrima[30];
     int contadorBolitas = 0; // Variable para contar el número de bolitas generadas
 
     public Simulacion() {
         initComponents();
-
-
         this.objetos = new Objetos[4];
         this.objetos[3] = new Objetos(fondoMorado, 100, 50, 25);
         this.objetos[2] = new Objetos(fondoRojo, 100, 275, 30);
@@ -51,21 +50,23 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
         this.add(this.objetos[3]);
 
         // Crear un temporizador que genere las bolitas cada segudo
-        Timer iniciar = new Timer(1000, q -> {
+       Timer iniciar = new Timer(1000, q -> {
             try {
-                for (int z = 0; z <= 28; z++) {
+                for (int z = 0; z <= 29; z++) {
                     if (z < 13) {
-                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, 400 + 10 * z, 275);
+                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, pProduccionx() + 10 * z, pProducciony());
                         this.add(this.bolitas[z].getBolita());
                         Container container = getContentPane();
                         container.setComponentZOrder(this.bolitas[z].getBolita(), 0);
+                        
                     } else if (z < 26) {
-                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, 400 + 10 * (z - 13), 310);
+                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, pProduccionx() + 10 * (z - 13), pProducciony());
                         this.add(this.bolitas[z].getBolita());
                         Container container = getContentPane();
                         container.setComponentZOrder(this.bolitas[z].getBolita(), 0);
+
                     } else if (z < 30) {
-                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, 400 + 10 * (z - 26), 345);
+                        this.bolitas[z] = new MateriaPrima(predeterminado, pIniciox(), pInicioy(), 5, pProduccionx() + 10 * (z - 26), pProducciony());
                         this.add(this.bolitas[z].getBolita());
                         Container container = getContentPane();
                         container.setComponentZOrder(this.bolitas[z].getBolita(), 0);
@@ -73,13 +74,9 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
                     }
 
                 }
-                
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         });
         iniciar.start();
 
@@ -100,6 +97,15 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
         jLabel2 = new javax.swing.JLabel();
         tiempo = new javax.swing.JLabel();
         reporte = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        Finalizar = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -138,6 +144,97 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(232, 168, 255));
+
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Empaquetado");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel2.setBackground(new java.awt.Color(164, 252, 116));
+
+        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Inventario");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+        );
+
+        jPanel3.setBackground(new java.awt.Color(255, 166, 166));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Salida");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(27, 27, 27))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(116, 205, 252));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Produccion");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        Finalizar.setText("Final");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,16 +245,29 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
                         .addContainerGap(692, Short.MAX_VALUE)
                         .addComponent(inicio))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(247, 247, 247)
-                        .addComponent(jLabel2)
-                        .addGap(0, 359, Short.MAX_VALUE)))
+                        .addGap(130, 130, 130)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(128, 128, 128)
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(54, 54, 54)
+                                .addComponent(tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(reporte)
+                        .addGap(22, 22, 22)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(235, 235, 235)
-                .addComponent(tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(reporte)
-                .addGap(28, 28, 28))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Finalizar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,10 +278,21 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addComponent(reporte, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 286, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reporte, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(Finalizar)
+                .addGap(35, 35, 35)
                 .addComponent(inicio)
                 .addGap(114, 114, 114))
         );
@@ -195,27 +316,24 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-
+iu hud = new iu();
         empezar();
 
        timer = new Timer(1000, new ActionListener() { // Crea un temporizador que se ejecutará cada 1000ms (1 segundo)
             @Override
             public void actionPerformed(ActionEvent z) {
-                if (contador <= 28) { // Crea las figuras mientras el contador sea menor o igual a 28
+                if (contador <= 29) { // Crea las figuras mientras el contador sea menor o igual a 29
                     bolitas[contador].mover(pIniciox(),pInicioy(),predeterminado);
                     bolitas[contador].start();
-                    bolitas[contador].mover(pIniciox(),pInicioy(),predeterminado);
+                    //System.out.println(contador);
                     contador++;
-                    System.out.println(getSeg());
                     tiempo.setText("00:"+String.valueOf(getSeg()));
+
                 }
             }
         });
 
         timer.start();
-
-
-
 
     }//GEN-LAST:event_formWindowActivated
 
@@ -257,14 +375,6 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
         }
         //</editor-fold>
 
-
-
-
-
-
-
-
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -295,10 +405,19 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Finalizar;
     public javax.swing.JLabel inicio;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JButton reporte;
     private javax.swing.JLabel tiempo;
     // End of variables declaration//GEN-END:variables
@@ -310,12 +429,31 @@ public class Simulacion extends javax.swing.JFrame implements KeyListener {
     public int pInicioy() {
         return inicio.getY();
     }
+    public int pProduccionx() {
+        return this.objetos[0].getPosicionX();
+    }
+    public int pProducciony() {
+        return this.objetos[0].getPosicionY();
+    }
     public int pInventariox() {
         return this.objetos[1].getPosicionX();
     }
     public int pInventarioY() {
         return this.objetos[1].getPosicionY();
     }
+    public int pEmpaquetadox() {
+        return objetos[2].getPosicionX();
+    }
+    public int pEmpaquetadoy() {
+        return objetos[2].getPosicionY();
+    }
+    public int pSAlidax() {
+        return objetos[3].getPosicionX();
+    }
+    public int pSAliday() {
+        return objetos[3].getPosicionY();
+    }
+
     public void produccionEspera(){
         try{
 
